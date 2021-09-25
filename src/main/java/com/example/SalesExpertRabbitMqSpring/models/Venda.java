@@ -5,11 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,19 +20,27 @@ import java.sql.Timestamp;
 public class Venda {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
-    @Column
+    @Enumerated(EnumType.STRING)
     VendaStatus vendaStatus;
 
-    @Column
+    @CreationTimestamp
+    @Column(updatable = false)
     Timestamp dataCriacao;
 
-    @Column
-    Produto produto;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "nota_fiscal",
+//            joinColumns = @JoinColumn(name = "venda_id"),
+//            inverseJoinColumns = @JoinColumn(name = "produto_id"))
+    @OneToMany(mappedBy = "venda")
+    private Set<NotaFiscal> notaFiscal;
 
-    @Column
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 
 

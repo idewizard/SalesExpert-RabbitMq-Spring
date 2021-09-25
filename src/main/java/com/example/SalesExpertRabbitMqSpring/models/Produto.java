@@ -6,11 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@Embeddable
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,6 +19,7 @@ import javax.persistence.Id;
 public class Produto {
 
     @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column
     private Long id;
 
@@ -32,5 +34,9 @@ public class Produto {
 
     @Column
     int qtEstoque;
+
+    @OneToMany(mappedBy = "produto")
+    private Set<NotaFiscal> notaFiscal;
+
 
 }

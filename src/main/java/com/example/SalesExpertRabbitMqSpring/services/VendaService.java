@@ -39,7 +39,7 @@ public class VendaService extends ServicesImp<Venda> {
         vendaFromDB.setVendaStatus(venda.getVendaStatus());
         vendaFromDB.setCliente(venda.getCliente());
         vendaFromDB.setDataCriacao(venda.getDataCriacao());
-        vendaFromDB.setProduto(venda.getProduto());
+        vendaFromDB.setNotaFiscal(venda.getNotaFiscal());
         vendaRepository.save(vendaFromDB);
     }
 
